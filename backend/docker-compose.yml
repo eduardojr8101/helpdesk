@@ -1,0 +1,41 @@
+services:
+  app:
+    image: webdevops/php-nginx:8.3
+
+    container_name: helpdesk_app
+
+    working_dir: /app
+
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+
+    volumes:
+      - ./:/app
+
+    ports:
+      - "8000:80"
+
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+
+    container_name: helpdesk_mysql
+
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: helpdesk
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

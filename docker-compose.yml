@@ -1,39 +1,38 @@
 services:
   app:
     image: webdevops/php-nginx:8.3
-
     container_name: helpdesk_app
-
     working_dir: /app
-
     environment:
       WEB_DOCUMENT_ROOT: /app/public
-
     volumes:
-      - ./:/app
-
+      - ./backend:/app
     ports:
       - "8000:80"
-
     depends_on:
       - mysql
 
+  frontend:
+    image: node:20
+    container_name: helpdesk_frontend
+    working_dir: /frontend
+    volumes:
+      - ./frontend:/frontend
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+
   mysql:
     image: mysql:8
-
     container_name: helpdesk_mysql
-
     restart: always
-
     environment:
       MYSQL_DATABASE: helpdesk
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: laravel
       MYSQL_PASSWORD: laravel
-
     ports:
       - "3306:3306"
-
     volumes:
       - mysql_data:/var/lib/mysql
 

@@ -112,3 +112,14 @@ button:hover {
   accent-color: #2563eb;
 }
 
+/* Espaçamento específico para a tela de 'Esqueceu' */
+.esqueceu {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* aumenta o espaço entre label, input, botão e link */
+}
+
+.esqueceu label {
+  margin-bottom: 0; /* o gap resolve o espaçamento, evita margem duplicada */
+}
+

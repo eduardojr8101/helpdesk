@@ -49,7 +49,7 @@ function App() {
 
        
           <div className='esqueceu'> 
-            <p><a href="#">Esqueceu sua senha?</a></p>
+            <p><a href="/Esqueceu">Esqueceu sua senha?</a></p>
           </div>
 
           <div className='lembre'>

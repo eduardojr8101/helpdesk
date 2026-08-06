@@ -10,7 +10,7 @@ function Cadastro() {
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [erro, setErro] = useState('');
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (!nome && !email && !senha && !confirmarSenha) {
@@ -44,9 +44,42 @@ function Cadastro() {
     }
 
     setErro('');
-    setTimeout(() => {
+    try {
+      const resposta = await fetch('http://localhost:8000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: nome,
+          email: email,
+          password: senha,
+        }),
+      });
+
+      const texto = await resposta.text();
+      let dados = null;
+
+      try {
+        dados = texto ? JSON.parse(texto) : null;
+      } catch (parseError) {
+        dados = null;
+      }
+
+      if (!resposta.ok) {
+        const mensagemErro =
+          dados?.errors
+            ? Object.values(dados.errors).flat().join(' ')
+            : dados?.message || texto || `Erro ${resposta.status}`;
+        setErro(mensagemErro);
+        return;
+      }
+
       navigate('/');
-    }, 2000);
+    } catch (error) {
+      setErro('Erro ao cadastrar usuário.');
+    }
   }
 
   return (

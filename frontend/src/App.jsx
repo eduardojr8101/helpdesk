@@ -1,13 +1,14 @@
-import{useState} from 'react'
-import './App.css'
-
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './App.css';
 
 function App() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const[erro, setErro] = useState('')
+  const [erro, setErro] = useState('');
 
-  function handleSubimit(event){
+  function handleSubimit(event) {
     event.preventDefault();
 
     if(email=== '' && password === ''){
@@ -24,6 +25,9 @@ function App() {
     }
 
     setErro('');
+    localStorage.setItem('auth', 'true');
+    localStorage.setItem('userEmail', email);
+    navigate('/home');
   }
   
 
@@ -49,7 +53,7 @@ function App() {
 
        
           <div className='esqueceu'> 
-            <p><a href="/Esqueceu">Esqueceu sua senha?</a></p>
+            <p><Link to="/esqueceu">Esqueceu sua senha?</Link></p>
           </div>
 
           <div className='lembre'>
@@ -58,7 +62,7 @@ function App() {
           </div>
 
           <div className='cadastar'>
-            <p className='cadastre'>Não tem uma conta? <a href="cadastro">Cadastre-se</a></p>
+            <p className='cadastre'>Não tem uma conta? <Link to="/cadastro">Cadastre-se</Link></p>
           </div>
        
 

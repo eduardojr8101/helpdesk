@@ -7,6 +7,7 @@ services:
       WEB_DOCUMENT_ROOT: /app/public
     volumes:
       - ./backend:/app
+      - /app/vendor
     ports:
       - "8000:80"
     depends_on:

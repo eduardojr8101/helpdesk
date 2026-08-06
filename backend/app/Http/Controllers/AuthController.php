@@ -28,4 +28,29 @@ class AuthController extends Controller
             'user' => $usuario,
         ], 201);
     }
+
+    public function login(Request $request): JsonResponse
+    {
+        $dados = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $usuario = User::where('email', $dados['email'])->first();
+
+
+        if(!$usuario){
+            return response()->json(['message' => 'Usuário não encontrado.'], 401);
+
+        }
+        if (!Hash::check($dados['password'], $usuario->password)) {
+            return response()->json(['message' => 'Senha Incorreta!'], 401);
+        }
+
+
+        return response()->json([
+            'message' => 'Login realizado com sucesso.',
+            'user' => $usuario,
+        ], 200);
+    }
 }

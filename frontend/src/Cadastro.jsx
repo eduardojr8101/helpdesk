@@ -13,11 +13,6 @@ function Cadastro() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!nome && !email && !senha && !confirmarSenha) {
-      setErro('Preencha todos os campos!');
-      return;
-    }
-
     if (!nome) {
       setErro('Preencha o campo Nome!');
       return;
